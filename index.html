@@ -348,7 +348,7 @@
       try {
         aiOutput.textContent = "Loading or running the AI model...";
         const explanation = await explainWithAI(text, analysis.matches);
-        aiOutput.textContent = cleanAIOutput(explanation);
+        aiOutput.textContent = buildSafeExplanation(explanation);
         modelNote.textContent =
           "Explanation generated locally in your browser using Qwen2.5.";
       } catch (error) {

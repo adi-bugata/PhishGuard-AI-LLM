@@ -290,7 +290,12 @@
       }
       return String(generated);
     }
-
+    function cleanAIOutput(text) {
+  return text
+    .replace(/\\\*/g, "")
+    .replace(/\*\*/g, "")
+    .trim();
+}
     scanBtn.addEventListener("click", async () => {
       const text = messageBox.value.trim();
 
@@ -318,7 +323,7 @@
       try {
         aiOutput.textContent = "Loading or running the AI model...";
         const explanation = await explainWithAI(text, analysis.matches);
-        aiOutput.textContent = explanation;
+        aiOutput.textContent = cleanAIOutput(explanation);
         modelNote.textContent =
           "Explanation generated locally in your browser using Qwen2.5.";
       } catch (error) {

@@ -297,6 +297,30 @@
     .replace(/\\#/g, "")
     .trim();
 }
+    function buildSafeExplanation(explanation) {
+  const cleaned = cleanAIOutput(explanation);
+
+  const warningMatch = cleaned.match(
+    /WARNING SIGNS:\s*([\s\S]*?)(?=\s*ASSESSMENT:|$)/i
+  );
+
+  const warningSigns = warningMatch
+    ? warningMatch[1].trim()
+    : "Review the warning signs identified in the checklist above.";
+
+  return (
+    "WARNING SIGNS:\n" +
+    warningSigns +
+    "\n\nASSESSMENT:\n" +
+    "These warning signs indicate possible risk, not proof of phishing. " +
+    "A URL alone does not prove that a message is dangerous." +
+    "\n\nNEXT STEPS:\n" +
+    "1. Do not click links or reply to suspicious messages.\n" +
+    "2. Never share passwords, OTPs, or banking details.\n" +
+    "3. Verify the message using your bank's official app, " +
+    "website typed manually, or officially published contact details."
+  );
+}
     scanBtn.addEventListener("click", async () => {
       const text = messageBox.value.trim();
 
